@@ -62,8 +62,13 @@ class Settings(BaseSettings):
     def database_url_sync(self) -> str:
         """Return a synchronous database URL for Alembic migrations."""
         url = self.DATABASE_URL
-        if "+asyncpg" in url:
-            return url.replace("+asyncpg", "+psycopg2")
+        # Normalize all postgres URL variants to postgresql+psycopg2://
+        if url.startswith("postgres://"):
+            return url.replace("postgres://", "postgresql+psycopg2://", 1)
+        elif url.startswith("postgresql+asyncpg://"):
+            return url.replace("postgresql+asyncpg://", "postgresql+psycopg2://", 1)
+        elif url.startswith("postgresql://"):
+            return url.replace("postgresql://", "postgresql+psycopg2://", 1)
         return url
 
     # ── JWT Authentication ───────────────────────────────────
