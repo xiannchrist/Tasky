@@ -1,13 +1,15 @@
-/**
- * Tasky Mobile — Production Environment Configuration
- */
+const getApiBaseUrl = (): string => {
+  const rawUrl = process.env.EXPO_PUBLIC_API_URL || 'https://tasky-backend-g03g.onrender.com/api';
+  const clean = rawUrl.replace(/\/+$/, '');
+  return clean.endsWith('/api') ? clean : `${clean}/api`;
+};
 
 export const ENV = {
   // Application Environment
   APP_ENV: (process.env.NODE_ENV as 'development' | 'staging' | 'production') || 'development',
 
-  // Live Cloud API Endpoint or local fallback
-  API_BASE_URL: process.env.EXPO_PUBLIC_API_URL || 'https://tasky-backend-g03g.onrender.com/api',
+  // Live Cloud API Endpoint (auto-normalized with /api)
+  API_BASE_URL: getApiBaseUrl(),
 
   // Network request timeout (15s)
   API_TIMEOUT_MS: 15000,
