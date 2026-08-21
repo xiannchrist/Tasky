@@ -8,9 +8,10 @@ databases:
 services:
   - type: web
     name: tasky-backend
-    runtime: docker
-    dockerfilePath: Tasky-Backend/Dockerfile
-    dockerContext: Tasky-Backend
+    runtime: python
+    rootDir: Tasky-Backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     plan: free
     region: singapore
     healthCheckPath: /health
