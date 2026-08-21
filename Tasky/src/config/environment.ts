@@ -7,7 +7,7 @@ export const ENV = {
   APP_ENV: (process.env.NODE_ENV as 'development' | 'staging' | 'production') || 'development',
 
   // Live Cloud API Endpoint or local fallback
-  API_BASE_URL: process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8000/api',
+  API_BASE_URL: process.env.EXPO_PUBLIC_API_URL || 'https://tasky-backend-g03g.onrender.com/api',
 
   // Network request timeout (15s)
   API_TIMEOUT_MS: 15000,
