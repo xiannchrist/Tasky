@@ -4,7 +4,7 @@
     "slug": "tasky",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/TaskyFinal.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "tasky",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -17,7 +17,7 @@
       "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#EFF6FF",
-        "foregroundImage": "./assets/images/TaskyFinal.png"
+        "foregroundImage": "./assets/images/adaptive-icon.png"
       },
       "permissions": [
         "INTERNET",
@@ -30,7 +30,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/images/TaskyFinal.png"
+      "favicon": "./assets/images/icon.png"
     },
     "plugins": [
       [
