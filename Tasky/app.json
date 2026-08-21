@@ -24,6 +24,11 @@
         "ACCESS_NETWORK_STATE",
         "VIBRATE",
         "RECEIVE_BOOT_COMPLETED",
+        "POST_NOTIFICATIONS",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "VIBRATE",
+        "RECEIVE_BOOT_COMPLETED",
         "POST_NOTIFICATIONS"
       ],
       "edgeToEdgeEnabled": true,
@@ -51,6 +56,12 @@
       "eas": {
         "projectId": "e8fc8a2c-69e3-4dc0-9b78-cf1f4c7e3ee3"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e8fc8a2c-69e3-4dc0-9b78-cf1f4c7e3ee3"
     }
   }
 }
