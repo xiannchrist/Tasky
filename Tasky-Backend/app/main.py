@@ -101,11 +101,13 @@ async def health_check():
 
 
 @app.get("/", tags=["Root"])
+@app.get("/api", tags=["Root"])
 async def root():
     """Root endpoint."""
     return {
         "message": f"Welcome to {settings.APP_NAME} Production API",
         "docs": "/api/docs",
+        "health": "/api/health",
         "version": settings.APP_VERSION,
         "status": "online",
     }
