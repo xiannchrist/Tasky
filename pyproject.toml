@@ -1,0 +1,11 @@
+[tool.pyright]
+extraPaths = ["Tasky-Backend", "."]
+
+[tool.pyrefly]
+extra_paths = ["Tasky-Backend", "."]
+
+[tool.mypy]
+mypy_path = "Tasky-Backend"
+
+[tool.pytest.ini_options]
+pythonpath = ["Tasky-Backend", "."]

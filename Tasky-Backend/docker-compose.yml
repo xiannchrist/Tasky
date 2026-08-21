@@ -1,0 +1,73 @@
+version: "3.9"
+
+services:
+  # ── PostgreSQL Database ──
+  postgres:
+    image: postgres:16-alpine
+    container_name: tasky-postgres
+    environment:
+      POSTGRES_USER: tasky_user
+      POSTGRES_PASSWORD: tasky_password
+      POSTGRES_DB: tasky_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tasky_user -d tasky_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis (for production worker queue) ──
+  redis:
+    image: redis:7-alpine
+    container_name: tasky-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── FastAPI Backend ──
+  api:
+    build: .
+    container_name: tasky-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://tasky_user:tasky_password@postgres:5432/tasky_db
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - .:/app
+
+  # ── LMS Sync Worker ──
+  worker:
+    build: .
+    container_name: tasky-worker
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://tasky_user:tasky_password@postgres:5432/tasky_db
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: python -m app.workers.lms_sync_worker
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:

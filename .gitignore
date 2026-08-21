@@ -1,0 +1,34 @@
+# ── Backend Exclusions ──────────────────────────────────────
+Tasky-Backend/venv/
+Tasky-Backend/.venv/
+Tasky-Backend/env/
+Tasky-Backend/__pycache__/
+Tasky-Backend/**/*.py[cod]
+Tasky-Backend/**/$py.class
+Tasky-Backend/.pytest_cache/
+Tasky-Backend/.coverage
+Tasky-Backend/*.db
+Tasky-Backend/*.sqlite3
+Tasky-Backend/*.log
+Tasky-Backend/.env
+Tasky-Backend/.env.local
+Tasky-Backend/.env.production
+
+# ── Frontend Exclusions ─────────────────────────────────────
+Tasky/node_modules/
+Tasky/.expo/
+Tasky/dist/
+Tasky/web-build/
+Tasky/.env
+Tasky/.env.local
+Tasky/.env.production
+Tasky/*.log
+Tasky/npm-debug.*
+Tasky/yarn-debug.*
+Tasky/yarn-error.*
+
+# ── General IDE & OS ─────────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

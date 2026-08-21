@@ -1,0 +1,11 @@
+{
+  "include": [
+    "Tasky-Backend"
+  ],
+  "extraPaths": [
+    "Tasky-Backend",
+    "./Tasky-Backend"
+  ],
+  "venvPath": "Tasky-Backend",
+  "venv": "venv"
+}

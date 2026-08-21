@@ -1,0 +1,41 @@
+databases:
+  - name: tasky-db
+    databaseName: tasky_db
+    user: tasky_user
+    plan: free
+    region: singapore
+
+services:
+  - type: web
+    name: tasky-backend
+    runtime: docker
+    dockerfilePath: Dockerfile
+    dockerContext: .
+    plan: free
+    region: singapore
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "false"
+      - key: ALLOWED_ORIGINS
+        value: "*"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tasky-db
+          property: connectionString
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+      - key: REFRESH_TOKEN_EXPIRE_DAYS
+        value: "14"
+      - key: DEFAULT_LMS_URL
+        value: https://my.smccnasipit.edu.ph
+      - key: LMS_ENCRYPTION_KEY
+        generateValue: true
+      - key: LMS_SYNC_INTERVAL_MINUTES
+        value: "5"

@@ -1,0 +1,11 @@
+[tool.pyright]
+extraPaths = ["."]
+
+[tool.pyrefly]
+extra_paths = ["."]
+
+[tool.mypy]
+mypy_path = "."
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
