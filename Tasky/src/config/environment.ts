@@ -11,8 +11,8 @@ export const ENV = {
   // Live Cloud API Endpoint (auto-normalized with /api)
   API_BASE_URL: getApiBaseUrl(),
 
-  // Network request timeout (15s)
-  API_TIMEOUT_MS: 15000,
+  // Network request timeout (30s to handle Render free-tier spin-up/cold starts)
+  API_TIMEOUT_MS: 30000,
 
   // App Metadata
   APP_NAME: 'Tasky',

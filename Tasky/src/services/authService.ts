@@ -56,6 +56,16 @@ export interface AuthTokens {
   token_type: string;
 }
 
+function parseErrorMessage(data: any, fallback: string): string {
+  if (!data) return fallback;
+  if (typeof data.detail === 'string') return data.detail;
+  if (Array.isArray(data.detail)) {
+    return data.detail.map((d: any) => d.msg || d.message || JSON.stringify(d)).join('. ');
+  }
+  if (typeof data.message === 'string') return data.message;
+  return fallback;
+}
+
 export const AuthService = {
   /**
    * Register a new student account
@@ -66,15 +76,20 @@ export const AuthService = {
     password: string;
   }): Promise<{ user: AuthUser; tokens: AuthTokens }> {
     const url = `${ENV.API_BASE_URL.replace(/\/+$/, '')}/auth/register`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(params),
-    });
+    let response: Response;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(params),
+      });
+    } catch (networkErr: any) {
+      throw new Error('Cannot connect to server. Please check your internet connection or try again in a few seconds.');
+    }
 
-    const data = await response.json();
+    const data = await response.json().catch(() => null);
     if (!response.ok) {
-      throw new Error(data?.detail || 'Failed to register account');
+      throw new Error(parseErrorMessage(data, `Registration failed (HTTP ${response.status})`));
     }
 
     await this.saveTokens(data);
@@ -90,15 +105,20 @@ export const AuthService = {
     password: string;
   }): Promise<{ user: AuthUser; tokens: AuthTokens }> {
     const url = `${ENV.API_BASE_URL.replace(/\/+$/, '')}/auth/login`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(params),
-    });
+    let response: Response;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(params),
+      });
+    } catch (networkErr: any) {
+      throw new Error('Cannot connect to server. Please check your internet connection or try again in a few seconds.');
+    }
 
-    const data = await response.json();
+    const data = await response.json().catch(() => null);
     if (!response.ok) {
-      throw new Error(data?.detail || 'Invalid email or password');
+      throw new Error(parseErrorMessage(data, 'Invalid email or password'));
     }
 
     await this.saveTokens(data);

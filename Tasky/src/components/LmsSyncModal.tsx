@@ -129,11 +129,22 @@ export const LmsSyncModal: React.FC<LmsSyncModalProps> = ({ visible, onClose }) 
                   <View
                     style={[
                       styles.statusDot,
-                      { backgroundColor: lmsStatus.connected ? Colors.success : Colors.textMuted },
+                      {
+                        backgroundColor: lmsStatus.connected
+                          ? Colors.success
+                          : lmsStatus.status === 'expired'
+                          ? Colors.danger
+                          : Colors.textMuted,
+                      },
                     ]}
                   />
                   <Text style={styles.statusLabel}>
-                    Status: {lmsStatus.connected ? 'Connected' : 'Disconnected'}
+                    Status:{' '}
+                    {lmsStatus.connected
+                      ? 'Connected'
+                      : lmsStatus.status === 'expired'
+                      ? 'Session Expired'
+                      : 'Disconnected'}
                   </Text>
                 </View>
                 {lmsStatus.connected && (
@@ -167,6 +178,18 @@ export const LmsSyncModal: React.FC<LmsSyncModalProps> = ({ visible, onClose }) 
                       Last Sync: <Text style={styles.metaValue}>{new Date(lmsStatus.lastSync).toLocaleString()}</Text>
                     </Text>
                   )}
+                  {lmsStatus.expiresAt && (
+                    <Text style={styles.metaText}>
+                      Session Expires: <Text style={styles.metaValue}>{new Date(lmsStatus.expiresAt).toLocaleTimeString()}</Text>
+                    </Text>
+                  )}
+                </View>
+              )}
+              {lmsStatus.status === 'expired' && (
+                <View style={styles.metaRow}>
+                  <Text style={[styles.metaText, { color: Colors.danger }]}>
+                    Your LMS sync session has timed out. Please enter your password below to reconnect.
+                  </Text>
                 </View>
               )}
             </View>

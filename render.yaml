@@ -1,6 +1,6 @@
 databases:
   - name: tasky-db
-    databaseName: tasky_db
+    databaseName: tasky_db_ihvm
     user: tasky_user
     plan: free
     region: singapore

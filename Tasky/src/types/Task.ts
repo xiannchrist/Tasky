@@ -45,7 +45,8 @@ export interface LmsConnectionStatus {
   lmsUsername?: string;
   lastSync?: string;
   nextSync?: string;
-  status: 'connected' | 'disconnected' | 'syncing' | 'error';
+  expiresAt?: string;
+  status: 'connected' | 'disconnected' | 'syncing' | 'error' | 'expired';
   lastError?: string;
 }
 

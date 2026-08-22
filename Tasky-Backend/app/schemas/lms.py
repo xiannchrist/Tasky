@@ -21,6 +21,7 @@ class LMSStatusResponse(BaseModel):
     lms_username: Optional[str] = None
     last_sync: Optional[datetime] = None
     next_sync: Optional[datetime] = None
+    expires_at: Optional[datetime] = None
     status: str = "disconnected"
     last_error: Optional[str] = None
 

@@ -80,6 +80,7 @@ class Settings(BaseSettings):
     # ── LMS Sync ─────────────────────────────────────────────
     DEFAULT_LMS_URL: str = "https://my.smccnasipit.edu.ph"
     LMS_SYNC_INTERVAL_MINUTES: int = 5
+    LMS_SESSION_EXPIRE_MINUTES: int = 60
     LMS_ENCRYPTION_KEY: str = "tasky-production-lms-encryption-32"
     LMS_TEST_USERNAME: str = ""
     LMS_TEST_PASSWORD: str = ""

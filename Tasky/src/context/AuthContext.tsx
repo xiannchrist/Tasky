@@ -44,32 +44,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   const login = async (params: { email: string; password: string }) => {
-    setIsLoading(true);
-    try {
-      const { user: authUser } = await AuthService.login(params);
-      setUser(authUser);
-    } finally {
-      setIsLoading(false);
-    }
+    const { user: authUser } = await AuthService.login(params);
+    setUser(authUser);
   };
 
   const register = async (params: { name: string; email: string; password: string }) => {
-    setIsLoading(true);
-    try {
-      const { user: authUser } = await AuthService.register(params);
-      setUser(authUser);
-    } finally {
-      setIsLoading(false);
-    }
+    const { user: authUser } = await AuthService.register(params);
+    setUser(authUser);
   };
 
   const logout = async () => {
-    setIsLoading(true);
     try {
+      try {
+        const { TaskApiService } = await import('../services/api/taskApi');
+        await TaskApiService.disconnectLms();
+      } catch (lmsErr) {
+        console.warn('LMS disconnect during logout warning:', lmsErr);
+      }
       await AuthService.logout();
-      setUser(null);
     } finally {
-      setIsLoading(false);
+      setUser(null);
     }
   };
 

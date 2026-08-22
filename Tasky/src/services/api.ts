@@ -4,6 +4,7 @@
  */
 
 import { AuthService } from './authService';
+import { ENV } from '../config/environment';
 
 export interface ApiResponse<T = any> {
   data: T;
@@ -23,9 +24,8 @@ export class ApiService {
   private timeoutMs: number;
 
   constructor() {
-    const rawUrl = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8000/api';
-    this.baseUrl = rawUrl.replace(/\/+$/, '');
-    this.timeoutMs = 15000;
+    this.baseUrl = ENV.API_BASE_URL.replace(/\/+$/, '');
+    this.timeoutMs = ENV.API_TIMEOUT_MS || 25000;
   }
 
   private async request<T>(

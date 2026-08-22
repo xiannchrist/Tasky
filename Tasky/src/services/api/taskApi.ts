@@ -143,6 +143,7 @@ export const TaskApiService = {
       lmsUsername: d.lms_username,
       lastSync: d.last_sync,
       nextSync: d.next_sync,
+      expiresAt: d.expires_at,
       status: d.status || (d.connected ? 'connected' : 'disconnected'),
       lastError: d.last_error,
     };
@@ -161,6 +162,7 @@ export const TaskApiService = {
       lmsUsername: d.lms_username,
       lastSync: d.last_sync,
       nextSync: d.next_sync,
+      expiresAt: d.expires_at,
       status: d.status || 'connected',
       lastError: d.last_error,
     };

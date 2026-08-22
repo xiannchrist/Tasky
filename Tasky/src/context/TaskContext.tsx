@@ -61,7 +61,7 @@ const TaskContext = createContext<TaskContextType | undefined>(undefined);
 export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { isAuthenticated, user } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [subjects, setSubjects] = useState<Subject[]>(DEFAULT_SUBJECTS);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
   const [profile, setProfile] = useState<UserProfile>(DEFAULT_PROFILE);
   const [lmsStatus, setLmsStatus] = useState<LmsConnectionStatus>({
     connected: false,
@@ -92,9 +92,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             TaskApiService.getLmsStatus(),
           ]);
 
-          const loadedSubjects = apiSubjects.status === 'fulfilled' && apiSubjects.value.length > 0
-            ? apiSubjects.value
-            : DEFAULT_SUBJECTS;
+          const loadedSubjects = apiSubjects.status === 'fulfilled' ? apiSubjects.value : [];
           setSubjects(loadedSubjects);
 
           if (apiTasks.status === 'fulfilled') {
@@ -456,7 +454,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     await NotificationService.cancelAllReminders();
     const samples = await StorageService.resetToSampleData();
     setTasks(samples);
-    setSubjects(DEFAULT_SUBJECTS);
+    setSubjects([]);
     setProfile(DEFAULT_PROFILE);
     setLoading(false);
   };

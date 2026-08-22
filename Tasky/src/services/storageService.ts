@@ -6,108 +6,14 @@ const SETTINGS_STORAGE_KEY = '@Tasky:settings_v1';
 const SUBJECTS_STORAGE_KEY = '@Tasky:subjects_v1';
 const PROFILE_STORAGE_KEY = '@Tasky:profile_v1';
 
-export const DEFAULT_SUBJECTS: Subject[] = [
-  {
-    id: 'subj-1',
-    name: 'Mobile Development',
-    code: 'IT301',
-    color: '#2563EB', // Blue
-  },
-  {
-    id: 'subj-2',
-    name: 'Database Systems',
-    code: 'IT204',
-    color: '#D97706', // Amber
-  },
-  {
-    id: 'subj-3',
-    name: 'Software Engineering',
-    code: 'CS302',
-    color: '#7C3AED', // Purple
-  },
-  {
-    id: 'subj-4',
-    name: 'Web Development',
-    code: 'IT202',
-    color: '#059669', // Emerald
-  },
-  {
-    id: 'subj-5',
-    name: 'Computer Networks',
-    code: 'IT305',
-    color: '#EA580C', // Orange
-  },
-];
+export const DEFAULT_SUBJECTS: Subject[] = [];
 
 export const DEFAULT_PROFILE: UserProfile = {
-  name: 'Student',
-  section: 'BSIT 3-A',
-  studentId: '2024-00123',
-  about: 'Mobile Application Development Student. Aiming for Dean\'s list!',
+  name: '',
+  section: '',
+  studentId: '',
+  about: '',
 };
-
-export const SAMPLE_TASKS: Task[] = [
-  {
-    id: 'sample-task-1',
-    title: 'Submit Web Development Project',
-    description: 'Finalize the frontend responsive design and write the project report documentation.',
-    deadline: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-    priority: 'High',
-    status: 'Pending',
-    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    subjectId: 'subj-4',
-    subjectName: 'Web Development',
-    subjectColor: '#059669',
-  },
-  {
-    id: 'sample-task-2',
-    title: 'Study for Java Exam',
-    description: 'Review object-oriented programming concepts, polymorphism, exceptions, and collection frameworks.',
-    deadline: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
-    priority: 'Medium',
-    status: 'Pending',
-    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-    subjectId: 'subj-1',
-    subjectName: 'Mobile Development',
-    subjectColor: '#2563EB',
-  },
-  {
-    id: 'sample-task-3',
-    title: 'Complete React Native Assignment',
-    description: 'Build mobile screens with navigation, state hooks, FlatList components, and async storage.',
-    deadline: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-    priority: 'High',
-    status: 'Completed',
-    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    subjectId: 'subj-1',
-    subjectName: 'Mobile Development',
-    subjectColor: '#2563EB',
-  },
-  {
-    id: 'sample-task-4',
-    title: 'Submit Research Paper Outline',
-    description: 'Draft the methodology, literature review citations, and expected experimental outcomes.',
-    deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-    priority: 'Medium',
-    status: 'Pending',
-    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    subjectId: 'subj-3',
-    subjectName: 'Software Engineering',
-    subjectColor: '#7C3AED',
-  },
-  {
-    id: 'sample-task-5',
-    title: 'Prepare Class Presentation Slides',
-    description: 'Create clean 10-minute slide deck summarizing mobile application development best practices.',
-    deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
-    priority: 'Low',
-    status: 'Completed',
-    createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-    subjectId: 'subj-2',
-    subjectName: 'Database Systems',
-    subjectColor: '#D97706',
-  },
-];
 
 const DEFAULT_SETTINGS: AppSettings = {
   notificationsEnabled: true,
@@ -125,8 +31,7 @@ export const StorageService = {
         const parsed: Task[] = JSON.parse(storedTasks);
         return Array.isArray(parsed) ? parsed : [];
       } else {
-        await this.saveTasks(SAMPLE_TASKS);
-        return SAMPLE_TASKS;
+        return [];
       }
     } catch (error) {
       console.error('Error reading tasks:', error);
@@ -243,9 +148,9 @@ export const StorageService = {
   },
 
   async resetToSampleData(): Promise<Task[]> {
-    await this.saveTasks(SAMPLE_TASKS);
-    await this.saveSubjects(DEFAULT_SUBJECTS);
-    return SAMPLE_TASKS;
+    await this.saveTasks([]);
+    await this.saveSubjects([]);
+    return [];
   },
 
   async clearAllTasks(): Promise<boolean> {

@@ -10,20 +10,22 @@
     },
     "preview": {
       "distribution": "internal",
+      "channel": "preview",
       "android": {
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://tasky-backend.onrender.com/api"
+        "EXPO_PUBLIC_API_URL": "https://tasky-backend-g03g.onrender.com/api"
       }
     },
     "production": {
       "autoIncrement": true,
+      "channel": "production",
       "android": {
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://tasky-backend.onrender.com/api"
+        "EXPO_PUBLIC_API_URL": "https://tasky-backend-g03g.onrender.com/api"
       }
     }
   },
